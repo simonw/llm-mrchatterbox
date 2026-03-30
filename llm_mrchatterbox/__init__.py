@@ -1,26 +1,8 @@
-import logging
 import random
 import sys
 from pathlib import Path
 
-import httpx
 import llm
-import torch
-
-# Suppress noisy nanochat/torch/httpx logging
-logging.getLogger("llm_mrchatterbox.nanochat").setLevel(logging.WARNING)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-from tokenizers import Tokenizer
-
-import llm_mrchatterbox.nanochat.gpt as gpt_module
-from llm_mrchatterbox.nanochat.common import compute_init, autodetect_device_type
-from llm_mrchatterbox.nanochat.engine import Engine
-from llm_mrchatterbox.nanochat.checkpoint_manager import (
-    load_checkpoint,
-    _patch_missing_config_keys,
-    _patch_missing_keys,
-)
-from llm_mrchatterbox.nanochat.gpt import GPT, GPTConfig
 
 HF_REPO = "https://huggingface.co/tventurella/mr_chatterbox_model/resolve/main"
 MODEL_FILES = [
@@ -37,6 +19,8 @@ def _cache_dir():
 
 def _ensure_downloaded():
     """Download model files from HuggingFace if not already cached."""
+    import httpx
+
     cache = _cache_dir()
     cache.mkdir(parents=True, exist_ok=True)
     for filename in MODEL_FILES:
@@ -82,6 +66,8 @@ SYSTEM_PREFIX = (
 
 class VictorianTokenizer:
     def __init__(self, tokenizer_path):
+        from tokenizers import Tokenizer
+
         self._tok = Tokenizer.from_file(str(tokenizer_path))
         self._tok.no_padding()
         self._tok.no_truncation()
@@ -126,6 +112,21 @@ class VictorianTokenizer:
 
 def _load_model():
     """Load the Mr. Chatterbox model and tokenizer. Called once on first use."""
+    import logging
+    import torch
+    import llm_mrchatterbox.nanochat.gpt as gpt_module
+    from llm_mrchatterbox.nanochat.common import compute_init, autodetect_device_type
+    from llm_mrchatterbox.nanochat.engine import Engine  # noqa: F811
+    from llm_mrchatterbox.nanochat.checkpoint_manager import (
+        load_checkpoint,
+        _patch_missing_config_keys,
+        _patch_missing_keys,
+    )
+    from llm_mrchatterbox.nanochat.gpt import GPT, GPTConfig
+
+    logging.getLogger("llm_mrchatterbox.nanochat").setLevel(logging.WARNING)
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+
     _ensure_downloaded()
     checkpoint_dir = str(_cache_dir())
 
@@ -182,7 +183,8 @@ def _load_model():
     tokenizer = VictorianTokenizer(TOKENIZER_PATH)
     assert tokenizer.get_vocab_size() == model_config_kwargs["vocab_size"]
 
-    return model, tokenizer
+    engine = Engine(model, tokenizer)
+    return model, tokenizer, engine
 
 
 class MrChatterbox(llm.Model):
@@ -196,8 +198,7 @@ class MrChatterbox(llm.Model):
 
     def _ensure_loaded(self):
         if self._model is None:
-            self._model, self._tokenizer = _load_model()
-            self._engine = Engine(self._model, self._tokenizer)
+            self._model, self._tokenizer, self._engine = _load_model()
 
     def execute(self, prompt, stream, response, conversation):
         self._ensure_loaded()
