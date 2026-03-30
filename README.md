@@ -5,7 +5,7 @@
 [![Tests](https://github.com/simonw/llm-mrchatterbox/actions/workflows/test.yml/badge.svg)](https://github.com/simonw/llm-mrchatterbox/actions/workflows/test.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/simonw/llm-mrchatterbox/blob/main/LICENSE)
 
-Mr. Chatterbox is a language model trained from scratch by Trip Venturella using [nanochat](https://github.com/karpathy/nanochat) on a corpus of over 28,000 Victorian-era British texts published between 1837 and 1899, [made available](https://huggingface.co/datasets/TheBritishLibrary/blbooks) by the British Library.
+[Mr. Chatterbox](https://huggingface.co/tventurella/mr_chatterbox_model) is a language model trained from scratch by Trip Venturella using [nanochat](https://github.com/karpathy/nanochat) on a corpus of over 28,000 Victorian-era British texts published between 1837 and 1899, [made available](https://huggingface.co/datasets/TheBritishLibrary/blbooks) by the British Library.
 
 This [LLM](https://llm.datasette.io/) plugin vendors enough of nanochat to get the model to work, also borrowing some details from Trip's [mr_chatterbox HuggingFace Space
 ](https://huggingface.co/spaces/tventurella/mr_chatterbox/tree/main). You can also [chat with the model](https://huggingface.co/spaces/tventurella/mr_chatterbox) using that Space in your browser.
