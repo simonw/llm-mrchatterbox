@@ -29,7 +29,7 @@ jobs:
           key: mrchatterbox-model-v1
       - name: Install dependencies
         run: |
-          pip install -e '.[test]'
+          pip install . --group dev
       - name: Run tests
         run: |
           python -m pytest
