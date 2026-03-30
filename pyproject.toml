@@ -1,0 +1,34 @@
+[project]
+name = "llm-mrchatterbox"
+version = "0.1"
+description = "Chat with Mr Chatterbox"
+readme = "README.md"
+authors = [{name = "Simon Willison"}]
+license = "MIT"
+classifiers = []
+requires-python = ">=3.10"
+dependencies = [
+    "llm",
+    "numpy",
+    "torch",
+    "tokenizers",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+package = true
+
+[project.urls]
+Homepage = "https://github.com/simonw/llm-mrchatterbox"
+Changelog = "https://github.com/simonw/llm-mrchatterbox/releases"
+Issues = "https://github.com/simonw/llm-mrchatterbox/issues"
+CI = "https://github.com/simonw/llm-mrchatterbox/actions"
+
+[project.entry-points.llm]
+mrchatterbox = "llm_mrchatterbox"
+
+[dependency-groups]
+dev = ["pytest"]
