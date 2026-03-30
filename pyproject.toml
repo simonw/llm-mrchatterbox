@@ -1,6 +1,6 @@
 [project]
 name = "llm-mrchatterbox"
-version = "0.1"
+version = "0.1.1"
 description = "Chat with Mr Chatterbox"
 readme = "README.md"
 authors = [{name = "Simon Willison"}]
