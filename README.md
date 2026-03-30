@@ -10,6 +10,8 @@
 This [LLM](https://llm.datasette.io/) plugin vendors enough of nanochat to get the model to work, also borrowing some details from Trip's [mr_chatterbox HuggingFace Space
 ](https://huggingface.co/spaces/tventurella/mr_chatterbox/tree/main). You can also [chat with the model](https://huggingface.co/spaces/tventurella/mr_chatterbox) using that Space in your browser.
 
+See [Mr. Chatterbox is a (weak) Victorian-era ethically trained model you can run on your own computer](https://simonwillison.net/2026/Mar/30/mr-chatterbox/) for background on this project.
+
 ## Installation
 
 Install this plugin in the same environment as [LLM](https://llm.datasette.io/).
