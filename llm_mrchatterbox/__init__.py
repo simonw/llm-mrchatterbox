@@ -6,11 +6,11 @@ import llm
 
 HF_REPO = "https://huggingface.co/tventurella/mr_chatterbox_model/resolve/main"
 MODEL_FILES = [
-    "model_000070.pt",
-    "meta_000070.json",
+    "model_000117.pt",
+    "meta_000117.json",
 ]
 TOKENIZER_PATH = Path(__file__).parent / "tokenizer.json"
-STEP = 70
+STEP = 117
 
 
 def _cache_dir():
